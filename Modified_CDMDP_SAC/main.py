@@ -55,12 +55,16 @@ def get_parameters():
 
 def main(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    env_names = ['HalfCheetah-v3', 'Ant-v3', 'Walker2d-v3', 'Hopper-v3', 'Humanoid-v3', 'Swimmer-v3']
+    env_names = ['Reacher-v2', 'InvertedPendulum-v2', 'Swimmer-v3']
     delays = [3, 6, 9]
     seeds = [1, 2, 3, 4, 5]
     for env_name in env_names:
         for delay in delays:
             for seed in seeds:
+                if env_name == 'Reacher-v2' or env_name == 'InvertedPendulum-v2':
+                    args.max_step = 300000
+                else:
+                    args.max_step = 1000000
                 args.env_name = env_name
                 args.delay_step = delay
                 args.random_seed = seed
